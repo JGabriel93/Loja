@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace Loja.Dominio.Entidades
 {
     public class Produto : Entidade
@@ -8,9 +10,12 @@ namespace Loja.Dominio.Entidades
         public string Descricao { get; set; }
         public decimal Preco { get; set; }
 
+        public virtual ICollection<ItemPedido> ItensPedidos { get; set; }
+
         public override void Validate()
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrEmpty(Nome))
+                AdicionarCritica("Nome do produto não informado");
         }
     }
 }

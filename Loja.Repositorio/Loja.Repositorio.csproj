@@ -2,6 +2,22 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20200410202314_PrimeiraVersao.cs" />
+    <Compile Remove="Migrations\20200410202314_PrimeiraVersao.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Loja.Dominio\Loja.Dominio.csproj" />
+  </ItemGroup>
+
 </Project>
+

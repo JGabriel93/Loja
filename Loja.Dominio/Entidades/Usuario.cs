@@ -10,11 +10,15 @@ namespace Loja.Dominio.Entidades
         public string Nome { get; set; }
         public string SobreNome { get; set; }
 
-        public ICollection<Pedido> Pedidos { get; set; }
+        public virtual ICollection<Pedido> Pedidos { get; set; }
 
         public override void Validate()
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrEmpty(Email))
+                AdicionarCritica("E-mail não informado");
+
+            if (string.IsNullOrEmpty(Senha))
+                AdicionarCritica("Senha não informada");
         }
     }
 }

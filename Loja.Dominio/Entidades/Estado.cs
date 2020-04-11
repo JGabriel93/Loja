@@ -2,17 +2,13 @@
 
 namespace Loja.Dominio.Entidades
 {
-    public class Estado : Entidade
+    public class Estado
     {
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Sigla { get; set; }
 
-        public ICollection<Cidade> Cidades { get; set; }
-
-        public override void Validate()
-        {
-            throw new System.NotImplementedException();
-        }
+        public virtual ICollection<Cidade> Cidades { get; set; }
+        public virtual ICollection<Endereco> Enderecos { get; set; }
     }
 }

@@ -1,0 +1,6 @@
+{
+  "ConnectionStrings": {
+    "SqlServerConnection": "",
+    "LojaDB": "server=localhost;uid=root;pwd=s2Flamengo!s2;database=LojaDB"
+  }
+}

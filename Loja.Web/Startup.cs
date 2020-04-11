@@ -1,8 +1,11 @@
+using Loja.Dominio.Contratos;
+using Loja.Repositorio.Contexto;
+using Loja.Repositorio.Repositorios;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,17 +13,30 @@ namespace Loja.Web
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
-        }
+            var builder = new ConfigurationBuilder();
+            builder.AddJsonFile("config.json", optional: false, reloadOnChange: true);
 
-        public IConfiguration Configuration { get; }
+            Configuration = builder.Build();
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            var connectionString = Configuration.GetConnectionString("LojaDB");
+            services.AddDbContext<LojaContexto>(option =>
+                                                option.UseLazyLoadingProxies()
+                                                    .UseMySql(connectionString, mySql =>
+                                                                                mySql.MigrationsAssembly("Loja.Repositorio")));
+
+            services.AddScoped<IProdutoRepositorio, ProdutoRepositorio>();
+            services.AddScoped<IPedidoRepositorio, PedidoRepositorio>();
+            services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -63,8 +79,8 @@ namespace Loja.Web
 
                 if (env.IsDevelopment())
                 {
-                    //spa.UseAngularCliServer(npmScript: "start");
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200/");                    
+                    spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200/");
                 }
             });
         }

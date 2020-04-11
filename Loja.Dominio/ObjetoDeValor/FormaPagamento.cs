@@ -1,4 +1,6 @@
-﻿using Loja.Dominio.Enumerados;
+﻿using Loja.Dominio.Entidades;
+using Loja.Dominio.Enumerados;
+using System.Collections.Generic;
 
 namespace Loja.Dominio.ObjetoDeValor
 {
@@ -7,6 +9,8 @@ namespace Loja.Dominio.ObjetoDeValor
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
+
+        public virtual ICollection<Pedido> Pedidos { get; set; }
 
         public bool Boleto
         {
