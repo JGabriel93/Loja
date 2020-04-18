@@ -19,6 +19,12 @@
     font-size: 16px;
   }
 
-.login{
-    color: #666;
+.login {
+  color: #666;
+}
+
+.btn-login {
+  color: #fff;
+  background-color: #add34c;
+  border-color: #add34c;
 }

@@ -1,17 +1,49 @@
 <div class="text-center">
   <form class="form-signin">
-    <img class="mb-4" src="/assets/empresa/logo.jfif" alt="" width="150" height="100">
-    <h1 class="h3 mb-3 font-weight-normal login">Login</h1>
+    <img class="mb-1" [src]="logoEmpresa" alt="" width="150">
+    <h1 class="h3 mb-3 font-weight-normal login">Olá! Faça o seu login</h1>
+
     <label for="inputEmail" class="sr-only">E-mail</label>
     <input type="email" id="inputEmail"
-           name="email" placeholder="Email"
-           class="form-control" />
+           name="email" placeholder="E-mail"
+           class="form-control mb-1"
+           [ngClass]="{
+            'is-invalid':email.invalid && (email.dirty || email.touched),
+            'is-valid':email.valid && (email.dirty || email.touched)
+           }"
+           [(ngModel)]="usuario.email"
+           #email="ngModel"
+           email
+           required />
+
+    <div class="invalid-feedback mb-2" *ngIf="email.invalid && (email.dirty || email.touched)">
+      <div *ngIf="email.errors.required">
+        E-mail deve ser informado
+      </div>
+      <div *ngIf="email.errors.email">
+        E-mail inválido
+      </div>
+    </div>
 
     <label for="inputSenha" class="sr-only">Senha</label>
     <input type="password" id="inputSenha"
            name="senha" placeholder="Senha"
-           class="form-control mb-3" />
+           class="form-control"
+           [ngClass]="{
+            'is-invalid':senha.invalid && (senha.dirty || senha.touched),
+            'is-valid':senha.valid && (senha.dirty || senha.touched)
+           }"
+           [(ngModel)]="usuario.senha"
+           #senha="ngModel"
+           senha
+           required />
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+    <div class="invalid-feedback mb-2" *ngIf="senha.invalid && (senha.dirty || senha.touched)">
+      <div *ngIf="senha.errors.required">
+        Senha deve ser informada
+      </div>
+    </div>
+
+    <button class="btn btn-lg btn-login btn-block mt-3" type="submit" (click)="entrar()">Entrar</button>
   </form>
 </div>
